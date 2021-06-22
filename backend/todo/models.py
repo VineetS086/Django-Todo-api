@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import tree
 
+from datetime import datetime
 
 class Task(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE)     #
@@ -15,7 +16,10 @@ class Task(models.Model):
     class Meta:
         ordering = ('is_completed', models.F('deadline').desc(nulls_last=True), 'created_at')
 
-    def complete(self):
-        self.is_completed = True
-        self.complete_at = True
-        self.save()
+
+    def save(self, *args, **kwargs):
+        if self.is_completed and self.completed_at==None:
+            self.completed_at = datetime.now()
+
+        return super().save(*args, **kwargs)
+        
