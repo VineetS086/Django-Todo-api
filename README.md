@@ -11,4 +11,5 @@ python manage.py runserver
 
 #### Here are te links
 
+Check `backend/test.ipynb` for examples in python.
 
