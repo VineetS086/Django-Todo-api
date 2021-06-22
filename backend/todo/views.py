@@ -1,5 +1,4 @@
-from copy import error
-from django.db.models import manager
+from django import urls
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 
 from rest_framework.views import APIView
@@ -9,6 +8,19 @@ from .models import Task
 from .serializer import TaskSerializer, UserSerializer
 from .permissions import IsOwner, IsOwnerOrRead
 from todo import serializer
+
+
+class HomeView(APIView):
+    
+    def get(self, request):
+        links = {
+            f'{urls.reverse("tasks")}' : 'all-user-tasks',
+            f'{urls.reverse("tasks")}<int>/' : 'particular-task',
+            f'{urls.reverse("get_token")}' : 'login',
+            f'{urls.reverse("register")}' : 'signup',
+        }
+
+        return Response(links)
 
 
 class TaskViewList(APIView):
