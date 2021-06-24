@@ -39,7 +39,7 @@ class TaskViewList(APIView):
 
         if serializer.is_valid():
             serializer.save(user=request.user)
-            return Response(serializer.data, status=200)
+            return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
 
@@ -64,16 +64,16 @@ class TaskViewDetail(APIView):
         return Response(serializer.errors, status=400)
 
     def delete(self, request, id):
-        task        = self.get_object(id)
+        task    = self.get_object(id)
         task.delete()
-        return Response(status=204)
+        return Response(data={'messege': f'object sucessfully deleted'}, status=204)
 
 
 class ReqisterView(APIView):
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             return Response(serializer.data, status=200)
         
         return Response(serializer.errors, status=400)
