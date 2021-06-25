@@ -1,4 +1,10 @@
 Icon?
 .DS_Store
 credentials.py
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+build/
+dist/
 
